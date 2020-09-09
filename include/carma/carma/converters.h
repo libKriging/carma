@@ -634,8 +634,8 @@ inline py::array_t<T> to_numpy(armaT* src, bool copy = false) {
 
 }  // namespace carma
 
-NAMESPACE_BEGIN(pybind11)
-NAMESPACE_BEGIN(detail)
+namespace pybind11 {
+namespace detail {
 
 template <typename armaT>
 struct type_caster<armaT, enable_if_t<carma::is_convertible<armaT>::value>> {
@@ -721,6 +721,6 @@ struct type_caster<armaT, enable_if_t<carma::is_convertible<armaT>::value>> {
 
     PYBIND11_TYPE_CASTER(armaT, _("Numpy.ndarray[") + npy_format_descriptor<T>::name + _("]"));
 };
-NAMESPACE_END(detail)
-NAMESPACE_END(pybind11)
+} /* namespace detail */
+} /* namespace pybind11 */
 #endif /* ARMA_CONVERTERS */
