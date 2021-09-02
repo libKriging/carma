@@ -47,9 +47,11 @@ inline void npy_free(void* ptr) {
 
 } // namespace cnalloc
 
+#ifndef CARMA_DO_NOT_EXPORT_ALIEN_MEM_FUNCTIONS
 #define ARMA_ALIEN_MEM_ALLOC_FUNCTION cnalloc::npy_malloc
 #define ARMA_ALIEN_MEM_FREE_FUNCTION cnalloc::npy_free
 #ifndef CARMA_ARMA_ALIEN_MEM_FUNCTIONS_SET
   #define CARMA_ARMA_ALIEN_MEM_FUNCTIONS_SET
 #endif
+#endif  // CARMA_DO_NOT_EXPORT_ALIEN_MEM_FUNCTIONS
 #endif  // INCLUDE_CARMA_BITS_CNALLOC_H_
