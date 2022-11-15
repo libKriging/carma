@@ -35,7 +35,7 @@ class ArrayStore {
     using T = typename armaT::elem_type;
 
  protected:
-    constexpr static ssize_t tsize = sizeof(T);
+    constexpr static pybind11::ssize_t tsize = sizeof(T);
     py::capsule base;
 
  public:
@@ -137,11 +137,11 @@ class ArrayStore {
     }
 
     py::array_t<T> get_view(bool writeable) {
-        ssize_t nslices;
-        auto nelem = static_cast<ssize_t>(mat.n_elem);
-        auto nrows = static_cast<ssize_t>(mat.n_rows);
-        auto ncols = static_cast<ssize_t>(mat.n_cols);
-        ssize_t rc_elem = nrows * ncols;
+        pybind11::ssize_t nslices;
+        auto nelem = static_cast<pybind11::ssize_t>(mat.n_elem);
+        auto nrows = static_cast<pybind11::ssize_t>(mat.n_rows);
+        auto ncols = static_cast<pybind11::ssize_t>(mat.n_cols);
+        pybind11::ssize_t rc_elem = nrows * ncols;
 
         py::array_t<T> arr;
 

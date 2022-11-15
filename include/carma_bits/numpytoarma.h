@@ -70,7 +70,7 @@ template <typename T>
 template <typename T>
 inline T* validate_from_array_mat(const py::buffer_info& src) {
     T* data = reinterpret_cast<T*>(src.ptr);
-    ssize_t dims = src.ndim;
+    pybind11::ssize_t dims = src.ndim;
     if (dims < 1 || dims > 2) {
         throw ConversionError("CARMA: Number of dimensions must be 1 <= ndim <= 2");
     }
@@ -138,7 +138,7 @@ inline arma::Mat<T> arr_to_mat(
 template <typename T>
 inline T* validate_from_array_col(const py::buffer_info& src) {
     T* data = reinterpret_cast<T*>(src.ptr);
-    ssize_t dims = src.ndim;
+    pybind11::ssize_t dims = src.ndim;
     if ((dims >= 2) && (src.shape[1] != 1)) {
         throw ConversionError("CARMA: Number of columns must <= 1");
     }
@@ -187,7 +187,7 @@ inline arma::Col<T> arr_to_col(
 template <typename T>
 inline T* validate_from_array_row(const py::buffer_info& src) {
     T* data = reinterpret_cast<T*>(src.ptr);
-    ssize_t dims = src.ndim;
+    pybind11::ssize_t dims = src.ndim;
     if ((dims >= 2) && (src.shape[0] != 1)) {
         throw ConversionError("CARMA: Number of rows must <= 1");
     }
@@ -238,7 +238,7 @@ inline arma::Row<T> arr_to_row(
 template <typename T>
 inline T* validate_from_array_cube(const py::buffer_info& src) {
     T* data = reinterpret_cast<T*>(src.ptr);
-    ssize_t dims = src.ndim;
+    pybind11::ssize_t dims = src.ndim;
     if (dims != 3) {
         throw ConversionError("CARMA: Number of dimensions must be 3");
     }

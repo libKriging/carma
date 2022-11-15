@@ -388,7 +388,7 @@ inline static T* swap_copy_array(PyObject* obj) {
     std::swap(src_of->data, tmp_of->data);
 
     // fix strides
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
     int ndim = PyArray_NDIM(src);
     npy_intp const* dims = PyArray_DIMS(src);
     src_of->strides[0] = tsize;
