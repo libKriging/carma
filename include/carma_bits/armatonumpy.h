@@ -61,13 +61,13 @@ inline py::capsule create_dummy_capsule(const armaT* data) {
 
 template <typename T>
 inline py::array_t<T> construct_array(arma::Row<T>* data) {
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
-    auto ncols = static_cast<ssize_t>(data->n_cols);
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
+    auto ncols = static_cast<pybind11::ssize_t>(data->n_cols);
 
     py::capsule base = create_capsule<arma::Row<T>>(data);
 
     return py::array_t<T>(
-        {static_cast<ssize_t>(1), ncols},  // shape
+        {static_cast<pybind11::ssize_t>(1), ncols},  // shape
         {tsize, tsize},                    // F-style contiguous strides
         data->memptr(),                    // the data pointer
         base                               // numpy array references this parent
@@ -76,13 +76,13 @@ inline py::array_t<T> construct_array(arma::Row<T>* data) {
 
 template <typename T>
 inline py::array_t<T> construct_array(arma::Col<T>* data) {
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
-    auto nrows = static_cast<ssize_t>(data->n_rows);
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
+    auto nrows = static_cast<pybind11::ssize_t>(data->n_rows);
 
     py::capsule base = create_capsule<arma::Col<T>>(data);
 
     return py::array_t<T>(
-        {nrows, static_cast<ssize_t>(1)},  // shape
+        {nrows, static_cast<pybind11::ssize_t>(1)},  // shape
         {tsize, nrows * tsize},            // F-style contiguous strides
         data->memptr(),                    // the data pointer
         base                               // numpy array references this parent
@@ -91,9 +91,9 @@ inline py::array_t<T> construct_array(arma::Col<T>* data) {
 
 template <typename T>
 inline py::array_t<T> construct_array(arma::Mat<T>* data) {
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
-    auto nrows = static_cast<ssize_t>(data->n_rows);
-    auto ncols = static_cast<ssize_t>(data->n_cols);
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
+    auto nrows = static_cast<pybind11::ssize_t>(data->n_rows);
+    auto ncols = static_cast<pybind11::ssize_t>(data->n_cols);
 
     py::capsule base = create_capsule<arma::Mat<T>>(data);
 
@@ -107,10 +107,10 @@ inline py::array_t<T> construct_array(arma::Mat<T>* data) {
 
 template <typename T>
 inline py::array_t<T> construct_array(arma::Cube<T>* data) {
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
-    auto nrows = static_cast<ssize_t>(data->n_rows);
-    auto ncols = static_cast<ssize_t>(data->n_cols);
-    auto nslices = static_cast<ssize_t>(data->n_slices);
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
+    auto nrows = static_cast<pybind11::ssize_t>(data->n_rows);
+    auto ncols = static_cast<pybind11::ssize_t>(data->n_cols);
+    auto nslices = static_cast<pybind11::ssize_t>(data->n_slices);
 
     return py::array_t<T>(
         // shape
@@ -126,13 +126,13 @@ inline py::array_t<T> construct_array(arma::Cube<T>* data) {
 
 template <typename T>
 inline py::array_t<T> construct_array(const arma::Row<T>* data) {
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
-    auto ncols = static_cast<ssize_t>(data->n_cols);
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
+    auto ncols = static_cast<pybind11::ssize_t>(data->n_cols);
 
     py::capsule base = create_dummy_capsule<arma::Row<T>>(data);
 
     auto arr = py::array_t<T>(
-        {static_cast<ssize_t>(1), ncols},  // shape
+        {static_cast<pybind11::ssize_t>(1), ncols},  // shape
         {tsize, tsize},                    // F-style contiguous strides
         data->memptr(),                    // the data pointer
         base                               // numpy array references this parent
@@ -143,13 +143,13 @@ inline py::array_t<T> construct_array(const arma::Row<T>* data) {
 
 template <typename T>
 inline py::array_t<T> construct_array(const arma::Col<T>* data) {
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
-    auto nrows = static_cast<ssize_t>(data->n_rows);
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
+    auto nrows = static_cast<pybind11::ssize_t>(data->n_rows);
 
     py::capsule base = create_dummy_capsule<arma::Col<T>>(data);
 
     auto arr = py::array_t<T>(
-        {nrows, static_cast<ssize_t>(1)},  // shape
+        {nrows, static_cast<pybind11::ssize_t>(1)},  // shape
         {tsize, nrows * tsize},            // F-style contiguous strides
         data->memptr(),                    // the data pointer
         base                               // numpy array references this parent
@@ -160,9 +160,9 @@ inline py::array_t<T> construct_array(const arma::Col<T>* data) {
 
 template <typename T>
 inline py::array_t<T> construct_array(const arma::Mat<T>* data) {
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
-    auto nrows = static_cast<ssize_t>(data->n_rows);
-    auto ncols = static_cast<ssize_t>(data->n_cols);
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
+    auto nrows = static_cast<pybind11::ssize_t>(data->n_rows);
+    auto ncols = static_cast<pybind11::ssize_t>(data->n_cols);
 
     auto arr = py::array_t<T>(
         {nrows, ncols},          // shape
@@ -177,10 +177,10 @@ inline py::array_t<T> construct_array(const arma::Mat<T>* data) {
 
 template <typename T>
 inline py::array_t<T> construct_array(const arma::Cube<T>* data) {
-    constexpr auto tsize = static_cast<ssize_t>(sizeof(T));
-    auto nrows = static_cast<ssize_t>(data->n_rows);
-    auto ncols = static_cast<ssize_t>(data->n_cols);
-    auto nslices = static_cast<ssize_t>(data->n_slices);
+    constexpr auto tsize = static_cast<pybind11::ssize_t>(sizeof(T));
+    auto nrows = static_cast<pybind11::ssize_t>(data->n_rows);
+    auto ncols = static_cast<pybind11::ssize_t>(data->n_cols);
+    auto nslices = static_cast<pybind11::ssize_t>(data->n_slices);
     auto arr = py::array_t<T>(
         // shape
         {nrows, ncols, nslices},
