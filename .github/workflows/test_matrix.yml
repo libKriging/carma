@@ -31,29 +31,29 @@ jobs:
         config: 
         - {
             name: "Windows (MSVC)",
-            os: windows-latest,
+            os: windows-2022,
             build_type: "Release",
             cc: "cl",
             cxx: "cl",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+            environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
             generators: "Visual Studio 17 2022",
             target: "ALL_BUILD"
           }
         - {
-            name: "Ubuntu (Clang-10)",
-            os: ubuntu-latest,
+            name: "Ubuntu (Clang-14)",
+            os: ubuntu-22.04,
             build_type: "Release",
-            cc: "clang-10",
-            cxx: "clang++-10",
+            cc: "clang-14",
+            cxx: "clang++-14",
             generators: "Ninja",
             target: "all"
           }
         - {
-            name: "Ubuntu (GCC-9)",
-            os: ubuntu-latest,
+            name: "Ubuntu (GCC-11)",
+            os: ubuntu-22.04,
             build_type: "Release",
-            cc: "gcc-9",
-            cxx: "g++-9",
+            cc: "gcc-11",
+            cxx: "g++-11",
             generators: "Ninja",
             target: "all"
           }
@@ -69,15 +69,13 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
         with:
-          python-version: 3.8
-
-      - uses: seanmiddleditch/gha-setup-ninja@master
+          python-version: '3.10'
 
       - name: Print env
         run: |
@@ -87,21 +85,21 @@ jobs:
       - name: Install dependencies on windows
         if: startsWith(matrix.config.os, 'windows')
         run: |
-          choco install cmake
+          choco install cmake ninja
           ninja --version
           cmake --version
 
       - name: Install dependencies on ubuntu
         if: runner.os == 'Linux'
         run: |
-          python -m pip install --upgrade cmake
+          python -m pip install --upgrade cmake ninja
           ninja --version
           cmake --version
 
       - name: Install dependencies on macos
         if: startsWith(matrix.config.os, 'macos')
         run: |
-          python -m pip install cmake
+          python -m pip install cmake ninja
           ninja --version
           cmake --version
       

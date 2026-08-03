@@ -20,6 +20,8 @@
 [![Documentation Status](https://readthedocs.org/projects/carma/badge/?version=latest)](https://carma.readthedocs.io/en/latest/?badge=latest)
 [![License](https://img.shields.io/github/license/RUrlus/carma)](https://github.com/RUrlus/carma/blob/stable/LICENSE)
 [![Release](https://img.shields.io/github/v/release/rurlus/carma)](https://github.com/RUrlus/carma/releases)
+[![DOI](https://zenodo.org/badge/235867993.svg)](https://zenodo.org/badge/latestdoi/235867993)
+
 
 ## Introduction
 
@@ -68,11 +70,18 @@ CARMA provides a number of configurations that can be set in the `carma_config.c
 
 ## Requirements
 
-CARMA >= v0.5 requires a compiler with support for C++14 and supports:
+Numpy v2.* is supported by CARMA >= v0.8.0 which requires a compiler with support for C++14 and supports:
 
-* Python 3.6 -- 3.9
+* Python 3.8 -- 3.12
 * Numpy >= 1.14
-* Pybind11 >= v2.6.0
+* **Pybind11 >= v2.12.0**
+* Armadillo >= 10.5.2
+
+CARMA <= v0.7 requires a compiler with support for C++14 and supports:
+
+* Python 3.8 -- 3.12
+* **Numpy >= 1.14 < 2.0**
+* **Pybind11 >= v2.6.0 < v2.12.0**
 * Armadillo >= 10.5.2
 
 CARMA makes use of Armadillo's `ARMA_ALIEN_MEM_ALLOC` and `ARMA_ALIEN_MEM_FREE` functionality introduced in version 10.5.2 to use Numpy's (de)allocator.
