@@ -31,17 +31,17 @@ jobs:
         config: 
         - {
             name: "Windows (MSVC)",
-            os: windows-latest,
+            os: windows-2022,
             build_type: "Release",
             cc: "cl",
             cxx: "cl",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+            environment_script: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
             generators: "Visual Studio 17 2022",
             target: "ALL_BUILD"
           }
         - {
             name: "Ubuntu (Clang-14)",
-            os: ubuntu-latest,
+            os: ubuntu-22.04,
             build_type: "Release",
             cc: "clang-14",
             cxx: "clang++-14",
@@ -50,7 +50,7 @@ jobs:
           }
         - {
             name: "Ubuntu (GCC-11)",
-            os: ubuntu-latest,
+            os: ubuntu-22.04,
             build_type: "Release",
             cc: "gcc-11",
             cxx: "g++-11",
