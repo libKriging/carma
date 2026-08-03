@@ -51,29 +51,29 @@ jobs:
             target: "ALL_BUILD"
           }
         - {
-            name: "Ubuntu (Clang-10)",
+            name: "Ubuntu (Clang-12)",
             os: ubuntu-latest,
             build_type: "Release",
-            cc: "clang-10",
-            cxx: "clang++-10",
+            cc: "clang-14",
+            cxx: "clang++-14",
             generators: "Ninja",
             target: "all"
           }
         - {
-            name: "Ubuntu (Clang-11)",
+            name: "Ubuntu (Clang-14)",
             os: ubuntu-latest,
             build_type: "Release",
-            cc: "clang-11",
-            cxx: "clang++-11",
+            cc: "clang-14",
+            cxx: "clang++-14",
             generators: "Ninja",
             target: "all"
           }
         - {
-            name: "Ubuntu (GCC-9)",
+            name: "Ubuntu (GCC-11)",
             os: ubuntu-latest,
             build_type: "Release",
-            cc: "gcc-9",
-            cxx: "g++-9",
+            cc: "gcc-11",
+            cxx: "g++-11",
             generators: "Ninja",
             target: "all"
           }
@@ -89,15 +89,13 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
         with:
-          python-version: 3.8
-
-      - uses: seanmiddleditch/gha-setup-ninja@master
+          python-version: '3.10'
 
       - name: Print env
         run: |
@@ -107,7 +105,7 @@ jobs:
       - name: Install dependencies on windows
         if: startsWith(matrix.config.os, 'windows')
         run: |
-          choco install cmake
+          choco install cmake ninja
           ninja --version
           cmake --version
 
@@ -121,14 +119,14 @@ jobs:
       - name: Install dependencies on ubuntu
         if: runner.os == 'Linux'
         run: |
-          python -m pip install --upgrade cmake
+          python -m pip install --upgrade cmake ninja
           ninja --version
           cmake --version
 
       - name: Install dependencies on macos
         if: startsWith(matrix.config.os, 'macos')
         run: |
-          python -m pip install cmake
+          python -m pip install cmake ninja
           ninja --version
           cmake --version
       
