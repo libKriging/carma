@@ -58,12 +58,21 @@ struct npy_api {
         API_PyArray_Free = 165,
         API_PyArray_Size = 59,
         API_PyArray_NewCopy = 85,
-        API_PyArray_CopyInto = 50,
+        // PyArray_CopyInto moved in the numpy C-API table between the 1.x and 2.x
+        // ABI (82 -> 50); the two other functions kept their slot.
+        API_PyArray_CopyInto_v1 = 82,
+        API_PyArray_CopyInto_v2 = 50,
         API_PyArray_NewLikeArray = 277,
         API_PyArray_NewFromDescr = 94,
         API_PyDataMem_NEW = 288,
         API_PyDataMem_FREE = 289,
     };
+
+    static int copy_into_index() {
+        py::str version_str = py::module_::import("numpy").attr("__version__");
+        int major = std::atoi(std::string(version_str).c_str());
+        return major >= 2 ? API_PyArray_CopyInto_v2 : API_PyArray_CopyInto_v1;
+    }
 
     static npy_api lookup() {
         pybind11::module_ m = pybind11::detail::import_numpy_core_submodule("multiarray");
@@ -78,12 +87,12 @@ struct npy_api {
         DECL_NPY_API(PyArray_Free);
         DECL_NPY_API(PyArray_Size);
         DECL_NPY_API(PyArray_NewCopy);
-        DECL_NPY_API(PyArray_CopyInto);
         DECL_NPY_API(PyArray_NewLikeArray);
         DECL_NPY_API(PyArray_NewFromDescr);
         DECL_NPY_API(PyDataMem_NEW);
         DECL_NPY_API(PyDataMem_FREE);
 #undef DECL_NPY_API
+        api.PyArray_CopyInto_ = (decltype(api.PyArray_CopyInto_)) api_ptr[copy_into_index()];
         return api;
     }
 };
